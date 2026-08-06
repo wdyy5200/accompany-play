@@ -1,0 +1,714 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yasen.mappers.TbUserMapper">
+
+	<!--实体映射-->
+	<resultMap id="base_result_map" type="com.yasen.entity.pojo.TbUser">
+		<!---->
+		<id column="id" property="id"  />
+		<!--账号-->
+		<result column="user_name" property="userName"  />
+		<!--密码-->
+		<result column="password" property="password"  />
+		<!--昵称-->
+		<result column="role_name" property="roleName"  />
+		<!--真实姓名-->
+		<result column="real_name" property="realName"  />
+		<!--邮箱-->
+		<result column="email" property="email"  />
+		<!--手机号-->
+		<result column="phone" property="phone"  />
+		<!--身份证号-->
+		<result column="id_card" property="idCard"  />
+		<!--身份证图片-->
+		<result column="id_card_img" property="idCardImg"  />
+		<!--状态-->
+		<result column="status" property="status"  />
+		<!--最后登录时间-->
+		<result column="last_login_time" property="lastLoginTime"  />
+		<!---->
+		<result column="open_id" property="openId"  />
+		<!--微信头像-->
+		<result column="open_img" property="openImg"  />
+		<!---->
+		<result column="create_time" property="createTime"  />
+		<!---->
+		<result column="update_time" property="updateTime"  />
+		<!---->
+		<result column="updated" property="updated"  />
+		<!---->
+		<result column="created" property="created"  />
+		<!---->
+		<result column="deleted" property="deleted"  />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="base_column_list">
+		 t.id,t.user_name,t.password,t.role_name,t.real_name,
+		 t.email,t.phone,t.id_card,t.id_card_img,t.status,
+		 t.last_login_time,t.open_id,t.open_img,t.create_time,t.update_time,
+		 t.updated,t.created,t.deleted
+	</sql>
+
+	<sql id="base_condition_filed">
+			<if test="query.id != null">
+				 and  t.id = #{query.id}
+			</if>
+			<if test="query.userName != null and query.userName!=''">
+				 and  t.user_name = #{query.userName}
+			</if>
+			<if test="query.password != null and query.password!=''">
+				 and  t.password = #{query.password}
+			</if>
+			<if test="query.roleName != null and query.roleName!=''">
+				 and  t.role_name = #{query.roleName}
+			</if>
+			<if test="query.realName != null and query.realName!=''">
+				 and  t.real_name = #{query.realName}
+			</if>
+			<if test="query.email != null and query.email!=''">
+				 and  t.email = #{query.email}
+			</if>
+			<if test="query.phone != null and query.phone!=''">
+				 and  t.phone = #{query.phone}
+			</if>
+			<if test="query.idCard != null and query.idCard!=''">
+				 and  t.id_card = #{query.idCard}
+			</if>
+			<if test="query.idCardImg != null and query.idCardImg!=''">
+				 and  t.id_card_img = #{query.idCardImg}
+			</if>
+			<if test="query.status != null and query.status!=''">
+				 and  t.status = #{query.status}
+			</if>
+			<if test="query.lastLoginTime != null and query.lastLoginTime!=''">
+				 <![CDATA[ and  t.last_login_time=str_to_date(#{query.lastLoginTime}, '%Y-%m-%d') ]]>
+			</if>
+			<if test="query.openId != null">
+				 and  t.open_id = #{query.openId}
+			</if>
+			<if test="query.openImg != null and query.openImg!=''">
+				 and  t.open_img = #{query.openImg}
+			</if>
+			<if test="query.createTime != null and query.createTime!=''">
+				 and  t.create_time = #{query.createTime}
+			</if>
+			<if test="query.updateTime != null and query.updateTime!=''">
+				 <![CDATA[ and  t.update_time=str_to_date(#{query.updateTime}, '%Y-%m-%d') ]]>
+			</if>
+			<if test="query.updated != null and query.updated!=''">
+				 and  t.updated = #{query.updated}
+			</if>
+			<if test="query.created != null and query.created!=''">
+				 and  t.created = #{query.created}
+			</if>
+			<if test="query.deleted != null and query.deleted!=''">
+				 and  t.deleted = #{query.deleted}
+			</if>
+	</sql>
+
+	<!-- 通用查询条件列-->
+	<sql id="query_condition">
+	 <where>
+			<include refid="base_condition_filed" />
+			<if test="query.userNameFuzzy!= null  and query.userNameFuzzy!=''">
+				 and  t.user_name like concat('%', #{query.userNameFuzzy}, '%')
+			</if>
+			<if test="query.passwordFuzzy!= null  and query.passwordFuzzy!=''">
+				 and  t.password like concat('%', #{query.passwordFuzzy}, '%')
+			</if>
+			<if test="query.roleNameFuzzy!= null  and query.roleNameFuzzy!=''">
+				 and  t.role_name like concat('%', #{query.roleNameFuzzy}, '%')
+			</if>
+			<if test="query.realNameFuzzy!= null  and query.realNameFuzzy!=''">
+				 and  t.real_name like concat('%', #{query.realNameFuzzy}, '%')
+			</if>
+			<if test="query.emailFuzzy!= null  and query.emailFuzzy!=''">
+				 and  t.email like concat('%', #{query.emailFuzzy}, '%')
+			</if>
+			<if test="query.phoneFuzzy!= null  and query.phoneFuzzy!=''">
+				 and  t.phone like concat('%', #{query.phoneFuzzy}, '%')
+			</if>
+			<if test="query.idCardFuzzy!= null  and query.idCardFuzzy!=''">
+				 and  t.id_card like concat('%', #{query.idCardFuzzy}, '%')
+			</if>
+			<if test="query.idCardImgFuzzy!= null  and query.idCardImgFuzzy!=''">
+				 and  t.id_card_img like concat('%', #{query.idCardImgFuzzy}, '%')
+			</if>
+			<if test="query.statusFuzzy!= null  and query.statusFuzzy!=''">
+				 and  t.status like concat('%', #{query.statusFuzzy}, '%')
+			</if>
+			<if test="query.lastLoginTimeStart!= null and query.lastLoginTimeStart!=''">
+				 <![CDATA[ and  t.last_login_time>=str_to_date(#{query.lastLoginTimeStart}, '%Y-%m-%d') ]]>
+			</if>
+			<if test="query.lastLoginTimeEnd!= null and query.lastLoginTimeEnd!=''">
+				 <![CDATA[ and  t.last_login_time< date_sub(str_to_date(#{query.lastLoginTimeEnd},'%Y-%m-%d'),interval -1 day) ]]>
+			</if>
+			<if test="query.openImgFuzzy!= null  and query.openImgFuzzy!=''">
+				 and  t.open_img like concat('%', #{query.openImgFuzzy}, '%')
+			</if>
+			<if test="query.createTimeFuzzy!= null  and query.createTimeFuzzy!=''">
+				 and  t.create_time like concat('%', #{query.createTimeFuzzy}, '%')
+			</if>
+			<if test="query.updateTimeStart!= null and query.updateTimeStart!=''">
+				 <![CDATA[ and  t.update_time>=str_to_date(#{query.updateTimeStart}, '%Y-%m-%d') ]]>
+			</if>
+			<if test="query.updateTimeEnd!= null and query.updateTimeEnd!=''">
+				 <![CDATA[ and  t.update_time< date_sub(str_to_date(#{query.updateTimeEnd},'%Y-%m-%d'),interval -1 day) ]]>
+			</if>
+			<if test="query.updatedFuzzy!= null  and query.updatedFuzzy!=''">
+				 and  t.updated like concat('%', #{query.updatedFuzzy}, '%')
+			</if>
+			<if test="query.createdFuzzy!= null  and query.createdFuzzy!=''">
+				 and  t.created like concat('%', #{query.createdFuzzy}, '%')
+			</if>
+			<if test="query.deletedFuzzy!= null  and query.deletedFuzzy!=''">
+				 and  t.deleted like concat('%', #{query.deletedFuzzy}, '%')
+			</if>
+	 </where>
+	</sql>
+
+	<!-- 查询集合-->
+	<select id="selectList" resultMap="base_result_map" >
+		 SELECT <include refid="base_column_list" /> FROM tb_user t <include refid="query_condition" />
+		 <if test="query.orderBy!=null">
+			 order by ${query.orderBy}
+		 </if>
+		 <if test="query.simplePage!=null">
+			 limit #{query.simplePage.start},#{query.simplePage.end}
+		 </if>
+	</select>
+
+	<!-- 查询数量-->
+	<select id="selectCount" resultType="java.lang.Integer" >
+		 SELECT count(1) FROM tb_user t <include refid="query_condition" />
+	</select>
+
+	<!-- 插入 （匹配有值的字段）-->
+	<insert id="insert" parameterType="com.yasen.entity.pojo.TbUser">
+		<selectKey keyProperty="bean.id" resultType="Integer" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		 INSERT INTO tb_user
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="bean.userName != null">
+				 user_name,
+			</if>
+			<if test="bean.password != null">
+				 password,
+			</if>
+			<if test="bean.roleName != null">
+				 role_name,
+			</if>
+			<if test="bean.realName != null">
+				 real_name,
+			</if>
+			<if test="bean.email != null">
+				 email,
+			</if>
+			<if test="bean.phone != null">
+				 phone,
+			</if>
+			<if test="bean.idCard != null">
+				 id_card,
+			</if>
+			<if test="bean.idCardImg != null">
+				 id_card_img,
+			</if>
+			<if test="bean.status != null">
+				 status,
+			</if>
+			<if test="bean.lastLoginTime != null">
+				 last_login_time,
+			</if>
+			<if test="bean.openId != null">
+				 open_id,
+			</if>
+			<if test="bean.openImg != null">
+				 open_img,
+			</if>
+			<if test="bean.createTime != null">
+				 create_time,
+			</if>
+			<if test="bean.updateTime != null">
+				 update_time,
+			</if>
+			<if test="bean.updated != null">
+				 updated,
+			</if>
+			<if test="bean.created != null">
+				 created,
+			</if>
+			<if test="bean.deleted != null">
+				 deleted,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="bean.userName!=null">
+				 #{bean.userName},
+			</if>
+			<if test="bean.password!=null">
+				 #{bean.password},
+			</if>
+			<if test="bean.roleName!=null">
+				 #{bean.roleName},
+			</if>
+			<if test="bean.realName!=null">
+				 #{bean.realName},
+			</if>
+			<if test="bean.email!=null">
+				 #{bean.email},
+			</if>
+			<if test="bean.phone!=null">
+				 #{bean.phone},
+			</if>
+			<if test="bean.idCard!=null">
+				 #{bean.idCard},
+			</if>
+			<if test="bean.idCardImg!=null">
+				 #{bean.idCardImg},
+			</if>
+			<if test="bean.status!=null">
+				 #{bean.status},
+			</if>
+			<if test="bean.lastLoginTime!=null">
+				 #{bean.lastLoginTime},
+			</if>
+			<if test="bean.openId!=null">
+				 #{bean.openId},
+			</if>
+			<if test="bean.openImg!=null">
+				 #{bean.openImg},
+			</if>
+			<if test="bean.createTime!=null">
+				 #{bean.createTime},
+			</if>
+			<if test="bean.updateTime!=null">
+				 #{bean.updateTime},
+			</if>
+			<if test="bean.updated!=null">
+				 #{bean.updated},
+			</if>
+			<if test="bean.created!=null">
+				 #{bean.created},
+			</if>
+			<if test="bean.deleted!=null">
+				 #{bean.deleted},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 插入或者更新 （匹配有值的字段）-->
+	<insert id="insertOrUpdate" parameterType="com.yasen.entity.pojo.TbUser">
+		 INSERT INTO tb_user
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="bean.id != null">
+				 id,
+			</if>
+			<if test="bean.userName != null">
+				 user_name,
+			</if>
+			<if test="bean.password != null">
+				 password,
+			</if>
+			<if test="bean.roleName != null">
+				 role_name,
+			</if>
+			<if test="bean.realName != null">
+				 real_name,
+			</if>
+			<if test="bean.email != null">
+				 email,
+			</if>
+			<if test="bean.phone != null">
+				 phone,
+			</if>
+			<if test="bean.idCard != null">
+				 id_card,
+			</if>
+			<if test="bean.idCardImg != null">
+				 id_card_img,
+			</if>
+			<if test="bean.status != null">
+				 status,
+			</if>
+			<if test="bean.lastLoginTime != null">
+				 last_login_time,
+			</if>
+			<if test="bean.openId != null">
+				 open_id,
+			</if>
+			<if test="bean.openImg != null">
+				 open_img,
+			</if>
+			<if test="bean.createTime != null">
+				 create_time,
+			</if>
+			<if test="bean.updateTime != null">
+				 update_time,
+			</if>
+			<if test="bean.updated != null">
+				 updated,
+			</if>
+			<if test="bean.created != null">
+				 created,
+			</if>
+			<if test="bean.deleted != null">
+				 deleted,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bean.id!=null">
+				 #{bean.id},
+			</if>
+			<if test="bean.userName!=null">
+				 #{bean.userName},
+			</if>
+			<if test="bean.password!=null">
+				 #{bean.password},
+			</if>
+			<if test="bean.roleName!=null">
+				 #{bean.roleName},
+			</if>
+			<if test="bean.realName!=null">
+				 #{bean.realName},
+			</if>
+			<if test="bean.email!=null">
+				 #{bean.email},
+			</if>
+			<if test="bean.phone!=null">
+				 #{bean.phone},
+			</if>
+			<if test="bean.idCard!=null">
+				 #{bean.idCard},
+			</if>
+			<if test="bean.idCardImg!=null">
+				 #{bean.idCardImg},
+			</if>
+			<if test="bean.status!=null">
+				 #{bean.status},
+			</if>
+			<if test="bean.lastLoginTime!=null">
+				 #{bean.lastLoginTime},
+			</if>
+			<if test="bean.openId!=null">
+				 #{bean.openId},
+			</if>
+			<if test="bean.openImg!=null">
+				 #{bean.openImg},
+			</if>
+			<if test="bean.createTime!=null">
+				 #{bean.createTime},
+			</if>
+			<if test="bean.updateTime!=null">
+				 #{bean.updateTime},
+			</if>
+			<if test="bean.updated!=null">
+				 #{bean.updated},
+			</if>
+			<if test="bean.created!=null">
+				 #{bean.created},
+			</if>
+			<if test="bean.deleted!=null">
+				 #{bean.deleted},
+			</if>
+		 </trim>
+		 on DUPLICATE key update 
+		 <trim prefix="" suffix="" suffixOverrides=",">
+			<if test="bean.userName!=null">
+				 user_name = VALUES(user_name),
+			</if>
+			<if test="bean.password!=null">
+				 password = VALUES(password),
+			</if>
+			<if test="bean.roleName!=null">
+				 role_name = VALUES(role_name),
+			</if>
+			<if test="bean.realName!=null">
+				 real_name = VALUES(real_name),
+			</if>
+			<if test="bean.email!=null">
+				 email = VALUES(email),
+			</if>
+			<if test="bean.phone!=null">
+				 phone = VALUES(phone),
+			</if>
+			<if test="bean.idCard!=null">
+				 id_card = VALUES(id_card),
+			</if>
+			<if test="bean.idCardImg!=null">
+				 id_card_img = VALUES(id_card_img),
+			</if>
+			<if test="bean.status!=null">
+				 status = VALUES(status),
+			</if>
+			<if test="bean.lastLoginTime!=null">
+				 last_login_time = VALUES(last_login_time),
+			</if>
+			<if test="bean.openId!=null">
+				 open_id = VALUES(open_id),
+			</if>
+			<if test="bean.openImg!=null">
+				 open_img = VALUES(open_img),
+			</if>
+			<if test="bean.createTime!=null">
+				 create_time = VALUES(create_time),
+			</if>
+			<if test="bean.updateTime!=null">
+				 update_time = VALUES(update_time),
+			</if>
+			<if test="bean.updated!=null">
+				 updated = VALUES(updated),
+			</if>
+			<if test="bean.created!=null">
+				 created = VALUES(created),
+			</if>
+			<if test="bean.deleted!=null">
+				 deleted = VALUES(deleted),
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 添加 （批量插入）-->
+	<insert id="insertBatch" parameterType="com.yasen.entity.pojo.TbUser" useGeneratedKeys="true" keyProperty="id">
+		 INSERT INTO tb_user(
+			 user_name,
+			 password,
+			 role_name,
+			 real_name,
+			 email,
+			 phone,
+			 id_card,
+			 id_card_img,
+			 status,
+			 last_login_time,
+			 open_id,
+			 open_img,
+			 create_time,
+			 update_time,
+			 updated,
+			 created,
+			 deleted
+		 )values
+		 <foreach collection="list" item="item" separator=",">
+			 (
+				 #{item.userName},
+				 #{item.password},
+				 #{item.roleName},
+				 #{item.realName},
+				 #{item.email},
+				 #{item.phone},
+				 #{item.idCard},
+				 #{item.idCardImg},
+				 #{item.status},
+				 #{item.lastLoginTime},
+				 #{item.openId},
+				 #{item.openImg},
+				 #{item.createTime},
+				 #{item.updateTime},
+				 #{item.updated},
+				 #{item.created},
+				 #{item.deleted}
+			 )
+		 </foreach>
+	</insert>
+
+	<!-- 批量新增修改 （批量插入）-->
+	<insert id="insertOrUpdateBatch" parameterType="com.yasen.entity.pojo.TbUser">
+		 INSERT INTO tb_user(
+			 user_name,
+			 password,
+			 role_name,
+			 real_name,
+			 email,
+			 phone,
+			 id_card,
+			 id_card_img,
+			 status,
+			 last_login_time,
+			 open_id,
+			 open_img,
+			 create_time,
+			 update_time,
+			 updated,
+			 created,
+			 deleted
+		 )values
+		 <foreach collection="list" item="item" separator=",">
+			 (
+				 #{item.userName},
+				 #{item.password},
+				 #{item.roleName},
+				 #{item.realName},
+				 #{item.email},
+				 #{item.phone},
+				 #{item.idCard},
+				 #{item.idCardImg},
+				 #{item.status},
+				 #{item.lastLoginTime},
+				 #{item.openId},
+				 #{item.openImg},
+				 #{item.createTime},
+				 #{item.updateTime},
+				 #{item.updated},
+				 #{item.created},
+				 #{item.deleted}
+			 )
+		 </foreach>
+			on DUPLICATE key update 
+			user_name = VALUES(user_name),
+			password = VALUES(password),
+			role_name = VALUES(role_name),
+			real_name = VALUES(real_name),
+			email = VALUES(email),
+			phone = VALUES(phone),
+			id_card = VALUES(id_card),
+			id_card_img = VALUES(id_card_img),
+			status = VALUES(status),
+			last_login_time = VALUES(last_login_time),
+			open_id = VALUES(open_id),
+			open_img = VALUES(open_img),
+			create_time = VALUES(create_time),
+			update_time = VALUES(update_time),
+			updated = VALUES(updated),
+			created = VALUES(created),
+			deleted = VALUES(deleted)
+	</insert>
+
+	<!--多条件修改-->
+	<update id="updateByParam" parameterType="com.yasen.entity.query.TbUserQuery">
+		 UPDATE tb_user t
+ 		 <set> 
+			<if test="bean.userName != null">
+				 user_name = #{bean.userName},
+			</if>
+			<if test="bean.password != null">
+				 password = #{bean.password},
+			</if>
+			<if test="bean.roleName != null">
+				 role_name = #{bean.roleName},
+			</if>
+			<if test="bean.realName != null">
+				 real_name = #{bean.realName},
+			</if>
+			<if test="bean.email != null">
+				 email = #{bean.email},
+			</if>
+			<if test="bean.phone != null">
+				 phone = #{bean.phone},
+			</if>
+			<if test="bean.idCard != null">
+				 id_card = #{bean.idCard},
+			</if>
+			<if test="bean.idCardImg != null">
+				 id_card_img = #{bean.idCardImg},
+			</if>
+			<if test="bean.status != null">
+				 status = #{bean.status},
+			</if>
+			<if test="bean.lastLoginTime != null">
+				 last_login_time = #{bean.lastLoginTime},
+			</if>
+			<if test="bean.openId != null">
+				 open_id = #{bean.openId},
+			</if>
+			<if test="bean.openImg != null">
+				 open_img = #{bean.openImg},
+			</if>
+			<if test="bean.createTime != null">
+				 create_time = #{bean.createTime},
+			</if>
+			<if test="bean.updateTime != null">
+				 update_time = #{bean.updateTime},
+			</if>
+			<if test="bean.updated != null">
+				 updated = #{bean.updated},
+			</if>
+			<if test="bean.created != null">
+				 created = #{bean.created},
+			</if>
+			<if test="bean.deleted != null">
+				 deleted = #{bean.deleted},
+			</if>
+ 		 </set>
+ 		 <include refid="query_condition" />
+	</update>
+
+	<!--多条件删除-->
+	<delete id="deleteByParam">
+		 delete t from tb_user t
+ 		 <include refid="query_condition" />
+	</delete>
+
+	<!-- 根据Id修改-->
+	<update id="updateById" parameterType="com.yasen.entity.pojo.TbUser">
+		 UPDATE tb_user
+ 		 <set> 
+			<if test="bean.userName != null">
+				 user_name = #{bean.userName},
+			</if>
+			<if test="bean.password != null">
+				 password = #{bean.password},
+			</if>
+			<if test="bean.roleName != null">
+				 role_name = #{bean.roleName},
+			</if>
+			<if test="bean.realName != null">
+				 real_name = #{bean.realName},
+			</if>
+			<if test="bean.email != null">
+				 email = #{bean.email},
+			</if>
+			<if test="bean.phone != null">
+				 phone = #{bean.phone},
+			</if>
+			<if test="bean.idCard != null">
+				 id_card = #{bean.idCard},
+			</if>
+			<if test="bean.idCardImg != null">
+				 id_card_img = #{bean.idCardImg},
+			</if>
+			<if test="bean.status != null">
+				 status = #{bean.status},
+			</if>
+			<if test="bean.lastLoginTime != null">
+				 last_login_time = #{bean.lastLoginTime},
+			</if>
+			<if test="bean.openId != null">
+				 open_id = #{bean.openId},
+			</if>
+			<if test="bean.openImg != null">
+				 open_img = #{bean.openImg},
+			</if>
+			<if test="bean.createTime != null">
+				 create_time = #{bean.createTime},
+			</if>
+			<if test="bean.updateTime != null">
+				 update_time = #{bean.updateTime},
+			</if>
+			<if test="bean.updated != null">
+				 updated = #{bean.updated},
+			</if>
+			<if test="bean.created != null">
+				 created = #{bean.created},
+			</if>
+			<if test="bean.deleted != null">
+				 deleted = #{bean.deleted},
+			</if>
+ 		 </set>
+ 		 where id=#{id}
+	</update>
+
+	<!-- 根据Id删除-->
+	<delete id="deleteById">
+		delete from tb_user where id=#{id}
+	</delete>
+
+	<!-- 根据PrimaryKey获取对象-->
+	<select id="selectById" resultMap="base_result_map" >
+		select <include refid="base_column_list" /> from tb_user t where id=#{id}
+	</select>
+
+</mapper>

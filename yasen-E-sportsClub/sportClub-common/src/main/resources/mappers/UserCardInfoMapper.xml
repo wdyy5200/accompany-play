@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yasen.mappers.UserCardInfoMapper">
+
+	<!--实体映射-->
+	<resultMap id="base_result_map" type="com.yasen.entity.pojo.UserCardInfo">
+		<!--身份证号-->
+		<result column="user_card_id" property="userCardId"  />
+		<!--用户id-->
+		<result column="user_id" property="userId"  />
+		<!--身份证正面-->
+		<result column="user_card_font" property="userCardFont"  />
+		<!--身份证反面-->
+		<result column="user_card_reverse" property="userCardReverse"  />
+		<!--银行卡号-->
+		<result column="user_card_bank_card" property="userCardBankCard"  />
+		<!--开户行-->
+		<result column="user_card_opening_bank" property="userCardOpeningBank"  />
+		<!--银行名称-->
+		<result column="user_card_bank" property="userCardBank"  />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="base_column_list">
+		 u.user_card_id,u.user_id,u.user_card_font,u.user_card_reverse,u.user_card_bank_card,
+		 u.user_card_opening_bank,u.user_card_bank
+	</sql>
+
+	<sql id="base_condition_filed">
+			<if test="query.userCardId != null and query.userCardId!=''">
+				 and  u.user_card_id = #{query.userCardId}
+			</if>
+			<if test="query.userId != null and query.userId!=''">
+				 and  u.user_id = #{query.userId}
+			</if>
+			<if test="query.userCardFont != null and query.userCardFont!=''">
+				 and  u.user_card_font = #{query.userCardFont}
+			</if>
+			<if test="query.userCardReverse != null and query.userCardReverse!=''">
+				 and  u.user_card_reverse = #{query.userCardReverse}
+			</if>
+			<if test="query.userCardBankCard != null and query.userCardBankCard!=''">
+				 and  u.user_card_bank_card = #{query.userCardBankCard}
+			</if>
+			<if test="query.userCardOpeningBank != null and query.userCardOpeningBank!=''">
+				 and  u.user_card_opening_bank = #{query.userCardOpeningBank}
+			</if>
+			<if test="query.userCardBank != null and query.userCardBank!=''">
+				 and  u.user_card_bank = #{query.userCardBank}
+			</if>
+	</sql>
+
+	<!-- 通用查询条件列-->
+	<sql id="query_condition">
+	 <where>
+			<include refid="base_condition_filed" />
+			<if test="query.userCardIdFuzzy!= null  and query.userCardIdFuzzy!=''">
+				 and  u.user_card_id like concat('%', #{query.userCardIdFuzzy}, '%')
+			</if>
+			<if test="query.userIdFuzzy!= null  and query.userIdFuzzy!=''">
+				 and  u.user_id like concat('%', #{query.userIdFuzzy}, '%')
+			</if>
+			<if test="query.userCardFontFuzzy!= null  and query.userCardFontFuzzy!=''">
+				 and  u.user_card_font like concat('%', #{query.userCardFontFuzzy}, '%')
+			</if>
+			<if test="query.userCardReverseFuzzy!= null  and query.userCardReverseFuzzy!=''">
+				 and  u.user_card_reverse like concat('%', #{query.userCardReverseFuzzy}, '%')
+			</if>
+			<if test="query.userCardBankCardFuzzy!= null  and query.userCardBankCardFuzzy!=''">
+				 and  u.user_card_bank_card like concat('%', #{query.userCardBankCardFuzzy}, '%')
+			</if>
+			<if test="query.userCardOpeningBankFuzzy!= null  and query.userCardOpeningBankFuzzy!=''">
+				 and  u.user_card_opening_bank like concat('%', #{query.userCardOpeningBankFuzzy}, '%')
+			</if>
+			<if test="query.userCardBankFuzzy!= null  and query.userCardBankFuzzy!=''">
+				 and  u.user_card_bank like concat('%', #{query.userCardBankFuzzy}, '%')
+			</if>
+	 </where>
+	</sql>
+
+	<!-- 查询集合-->
+	<select id="selectList" resultMap="base_result_map" >
+		 SELECT <include refid="base_column_list" /> FROM user_card_info u <include refid="query_condition" />
+		 <if test="query.orderBy!=null">
+			 order by ${query.orderBy}
+		 </if>
+		 <if test="query.simplePage!=null">
+			 limit #{query.simplePage.start},#{query.simplePage.end}
+		 </if>
+	</select>
+
+	<!-- 查询数量-->
+	<select id="selectCount" resultType="java.lang.Integer" >
+		 SELECT count(1) FROM user_card_info u <include refid="query_condition" />
+	</select>
+
+	<!-- 插入 （匹配有值的字段）-->
+	<insert id="insert" parameterType="com.yasen.entity.pojo.UserCardInfo">
+		 INSERT INTO user_card_info
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="bean.userCardId != null">
+				 user_card_id,
+			</if>
+			<if test="bean.userId != null">
+				 user_id,
+			</if>
+			<if test="bean.userCardFont != null">
+				 user_card_font,
+			</if>
+			<if test="bean.userCardReverse != null">
+				 user_card_reverse,
+			</if>
+			<if test="bean.userCardBankCard != null">
+				 user_card_bank_card,
+			</if>
+			<if test="bean.userCardOpeningBank != null">
+				 user_card_opening_bank,
+			</if>
+			<if test="bean.userCardBank != null">
+				 user_card_bank,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="bean.userCardId!=null">
+				 #{bean.userCardId},
+			</if>
+			<if test="bean.userId!=null">
+				 #{bean.userId},
+			</if>
+			<if test="bean.userCardFont!=null">
+				 #{bean.userCardFont},
+			</if>
+			<if test="bean.userCardReverse!=null">
+				 #{bean.userCardReverse},
+			</if>
+			<if test="bean.userCardBankCard!=null">
+				 #{bean.userCardBankCard},
+			</if>
+			<if test="bean.userCardOpeningBank!=null">
+				 #{bean.userCardOpeningBank},
+			</if>
+			<if test="bean.userCardBank!=null">
+				 #{bean.userCardBank},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 插入或者更新 （匹配有值的字段）-->
+	<insert id="insertOrUpdate" parameterType="com.yasen.entity.pojo.UserCardInfo">
+		 INSERT INTO user_card_info
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="bean.userCardId != null">
+				 user_card_id,
+			</if>
+			<if test="bean.userId != null">
+				 user_id,
+			</if>
+			<if test="bean.userCardFont != null">
+				 user_card_font,
+			</if>
+			<if test="bean.userCardReverse != null">
+				 user_card_reverse,
+			</if>
+			<if test="bean.userCardBankCard != null">
+				 user_card_bank_card,
+			</if>
+			<if test="bean.userCardOpeningBank != null">
+				 user_card_opening_bank,
+			</if>
+			<if test="bean.userCardBank != null">
+				 user_card_bank,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bean.userCardId!=null">
+				 #{bean.userCardId},
+			</if>
+			<if test="bean.userId!=null">
+				 #{bean.userId},
+			</if>
+			<if test="bean.userCardFont!=null">
+				 #{bean.userCardFont},
+			</if>
+			<if test="bean.userCardReverse!=null">
+				 #{bean.userCardReverse},
+			</if>
+			<if test="bean.userCardBankCard!=null">
+				 #{bean.userCardBankCard},
+			</if>
+			<if test="bean.userCardOpeningBank!=null">
+				 #{bean.userCardOpeningBank},
+			</if>
+			<if test="bean.userCardBank!=null">
+				 #{bean.userCardBank},
+			</if>
+		 </trim>
+		 on DUPLICATE key update 
+		 <trim prefix="" suffix="" suffixOverrides=",">
+			<if test="bean.userCardId!=null">
+				 user_card_id = VALUES(user_card_id),
+			</if>
+			<if test="bean.userId!=null">
+				 user_id = VALUES(user_id),
+			</if>
+			<if test="bean.userCardFont!=null">
+				 user_card_font = VALUES(user_card_font),
+			</if>
+			<if test="bean.userCardReverse!=null">
+				 user_card_reverse = VALUES(user_card_reverse),
+			</if>
+			<if test="bean.userCardBankCard!=null">
+				 user_card_bank_card = VALUES(user_card_bank_card),
+			</if>
+			<if test="bean.userCardOpeningBank!=null">
+				 user_card_opening_bank = VALUES(user_card_opening_bank),
+			</if>
+			<if test="bean.userCardBank!=null">
+				 user_card_bank = VALUES(user_card_bank),
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 添加 （批量插入）-->
+	<insert id="insertBatch" parameterType="com.yasen.entity.pojo.UserCardInfo">
+		 INSERT INTO user_card_info(
+			 user_card_id,
+			 user_id,
+			 user_card_font,
+			 user_card_reverse,
+			 user_card_bank_card,
+			 user_card_opening_bank,
+			 user_card_bank
+		 )values
+		 <foreach collection="list" item="item" separator=",">
+			 (
+				 #{item.userCardId},
+				 #{item.userId},
+				 #{item.userCardFont},
+				 #{item.userCardReverse},
+				 #{item.userCardBankCard},
+				 #{item.userCardOpeningBank},
+				 #{item.userCardBank}
+			 )
+		 </foreach>
+	</insert>
+
+	<!-- 批量新增修改 （批量插入）-->
+	<insert id="insertOrUpdateBatch" parameterType="com.yasen.entity.pojo.UserCardInfo">
+		 INSERT INTO user_card_info(
+			 user_card_id,
+			 user_id,
+			 user_card_font,
+			 user_card_reverse,
+			 user_card_bank_card,
+			 user_card_opening_bank,
+			 user_card_bank
+		 )values
+		 <foreach collection="list" item="item" separator=",">
+			 (
+				 #{item.userCardId},
+				 #{item.userId},
+				 #{item.userCardFont},
+				 #{item.userCardReverse},
+				 #{item.userCardBankCard},
+				 #{item.userCardOpeningBank},
+				 #{item.userCardBank}
+			 )
+		 </foreach>
+			on DUPLICATE key update 
+			user_card_id = VALUES(user_card_id),
+			user_id = VALUES(user_id),
+			user_card_font = VALUES(user_card_font),
+			user_card_reverse = VALUES(user_card_reverse),
+			user_card_bank_card = VALUES(user_card_bank_card),
+			user_card_opening_bank = VALUES(user_card_opening_bank),
+			user_card_bank = VALUES(user_card_bank)
+	</insert>
+
+	<!--多条件修改-->
+	<update id="updateByParam" parameterType="com.yasen.entity.query.UserCardInfoQuery">
+		 UPDATE user_card_info u
+ 		 <set> 
+			<if test="bean.userCardId != null">
+				 user_card_id = #{bean.userCardId},
+			</if>
+			<if test="bean.userId != null">
+				 user_id = #{bean.userId},
+			</if>
+			<if test="bean.userCardFont != null">
+				 user_card_font = #{bean.userCardFont},
+			</if>
+			<if test="bean.userCardReverse != null">
+				 user_card_reverse = #{bean.userCardReverse},
+			</if>
+			<if test="bean.userCardBankCard != null">
+				 user_card_bank_card = #{bean.userCardBankCard},
+			</if>
+			<if test="bean.userCardOpeningBank != null">
+				 user_card_opening_bank = #{bean.userCardOpeningBank},
+			</if>
+			<if test="bean.userCardBank != null">
+				 user_card_bank = #{bean.userCardBank},
+			</if>
+ 		 </set>
+ 		 <include refid="query_condition" />
+	</update>
+
+	<!--多条件删除-->
+	<delete id="deleteByParam">
+		 delete u from user_card_info u
+ 		 <include refid="query_condition" />
+	</delete>
+
+	<!-- 根据UserCardIdAndUserId修改-->
+	<update id="updateByUserCardIdAndUserId" parameterType="com.yasen.entity.pojo.UserCardInfo">
+		 UPDATE user_card_info
+ 		 <set> 
+			<if test="bean.userCardFont != null">
+				 user_card_font = #{bean.userCardFont},
+			</if>
+			<if test="bean.userCardReverse != null">
+				 user_card_reverse = #{bean.userCardReverse},
+			</if>
+			<if test="bean.userCardBankCard != null">
+				 user_card_bank_card = #{bean.userCardBankCard},
+			</if>
+			<if test="bean.userCardOpeningBank != null">
+				 user_card_opening_bank = #{bean.userCardOpeningBank},
+			</if>
+			<if test="bean.userCardBank != null">
+				 user_card_bank = #{bean.userCardBank},
+			</if>
+ 		 </set>
+ 		 where user_card_id=#{userCardId} and user_id=#{userId}
+	</update>
+
+	<!-- 根据UserCardIdAndUserId删除-->
+	<delete id="deleteByUserCardIdAndUserId">
+		delete from user_card_info where user_card_id=#{userCardId} and user_id=#{userId}
+	</delete>
+
+	<!-- 根据PrimaryKey获取对象-->
+	<select id="selectByUserCardIdAndUserId" resultMap="base_result_map" >
+		select <include refid="base_column_list" /> from user_card_info u where user_card_id=#{userCardId} and user_id=#{userId}
+	</select>
+
+</mapper>
