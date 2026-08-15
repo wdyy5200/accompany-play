@@ -1,10 +1,11 @@
 package com.yasen.mappers;
 
 
+ import org.apache.ibatis.annotations.Mapper;
  import org.apache.ibatis.annotations.Param;
 
  import java.util.List;
-
+@Mapper
  interface BaseMapperTableSplit<T, P> {
 
     /**

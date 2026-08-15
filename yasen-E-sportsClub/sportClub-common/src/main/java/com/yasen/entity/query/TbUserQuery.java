@@ -89,9 +89,9 @@ public class TbUserQuery extends BaseParam {
 	private String lastLoginTimeEnd;
 
 	/**
-	 * 
+	 * 微信openId
 	 */
-	private Integer openId;
+	private String openId;
 
 	/**
 	 * 微信头像
@@ -313,11 +313,11 @@ public class TbUserQuery extends BaseParam {
 		return this.lastLoginTimeEnd;
 	}
 
-	public void setOpenId(Integer openId){
+	public void setOpenId(String openId){
 		this.openId = openId;
 	}
 
-	public Integer getOpenId(){
+	public String getOpenId(){
 		return this.openId;
 	}
 

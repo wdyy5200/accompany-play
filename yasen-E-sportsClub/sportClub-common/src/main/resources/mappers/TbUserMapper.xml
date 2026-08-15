@@ -86,7 +86,7 @@
 			<if test="query.lastLoginTime != null and query.lastLoginTime!=''">
 				 <![CDATA[ and  t.last_login_time=str_to_date(#{query.lastLoginTime}, '%Y-%m-%d') ]]>
 			</if>
-			<if test="query.openId != null">
+			<if test="query.openId != null and query.openId!=''">
 				 and  t.open_id = #{query.openId}
 			</if>
 			<if test="query.openImg != null and query.openImg!=''">
@@ -706,9 +706,19 @@
 		delete from tb_user where id=#{id}
 	</delete>
 
-	<!-- 根据PrimaryKey获取对象-->
+	<!-- 根据Id获取对象-->
 	<select id="selectById" resultMap="base_result_map" >
 		select <include refid="base_column_list" /> from tb_user t where id=#{id}
+	</select>
+
+	<!-- 根据用户名查询 -->
+	<select id="selectByUserName" resultMap="base_result_map">
+		select <include refid="base_column_list" /> from tb_user t where t.user_name = #{userName} limit 1
+	</select>
+
+	<!-- 根据微信openId查询 -->
+	<select id="selectByOpenId" resultMap="base_result_map">
+		select <include refid="base_column_list" /> from tb_user t where t.open_id = #{openId} limit 1
 	</select>
 
 </mapper>

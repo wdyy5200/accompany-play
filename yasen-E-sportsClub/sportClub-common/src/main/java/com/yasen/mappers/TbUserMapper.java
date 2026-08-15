@@ -1,10 +1,12 @@
 package com.yasen.mappers;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
  * 用户信息表 数据库操作接口
  */
+@Mapper
 public interface TbUserMapper<T,P> extends BaseMapper<T,P> {
 
 	/**
@@ -24,5 +26,14 @@ public interface TbUserMapper<T,P> extends BaseMapper<T,P> {
 	 */
 	 T selectById(@Param("id") Integer id);
 
+	/**
+	 * 根据用户名查询
+	 */
+	 T selectByUserName(@Param("userName") String userName);
+
+	/**
+	 * 根据微信openId查询
+	 */
+	 T selectByOpenId(@Param("openId") String openId);
 
 }

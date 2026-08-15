@@ -1,10 +1,12 @@
 package com.yasen.mappers;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
  * 用户权限关联表 数据库操作接口
  */
+@Mapper
 public interface TbUserRoleMapper<T,P> extends BaseMapper<T,P> {
 
 	/**

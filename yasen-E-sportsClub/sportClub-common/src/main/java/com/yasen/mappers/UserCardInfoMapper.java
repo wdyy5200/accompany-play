@@ -1,10 +1,12 @@
 package com.yasen.mappers;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
  * 用户身份信息表 数据库操作接口
  */
+@Mapper
 public interface UserCardInfoMapper<T,P> extends BaseMapper<T,P> {
 
 	/**

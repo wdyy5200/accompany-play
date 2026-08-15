@@ -50,4 +50,17 @@ public class StringTools {
         }
         return false;
     }
+
+    /**
+     * 生成指定长度的随机字符串（字母+数字）
+     */
+    public static String getRandomString(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder sb = new StringBuilder(length);
+        java.util.Random random = new java.util.Random();
+        for (int i = 0; i < length; i++) {
+            sb.append(chars.charAt(random.nextInt(chars.length())));
+        }
+        return sb.toString();
+    }
 }

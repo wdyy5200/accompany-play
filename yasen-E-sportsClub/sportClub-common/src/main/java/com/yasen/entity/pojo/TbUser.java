@@ -75,9 +75,9 @@ public class TbUser implements Serializable {
 	private Date lastLoginTime;
 
 	/**
-	 * 
+	 * 微信openId
 	 */
-	private Integer openId;
+	private String openId;
 
 	/**
 	 * 微信头像
@@ -200,11 +200,11 @@ public class TbUser implements Serializable {
 		return this.lastLoginTime;
 	}
 
-	public void setOpenId(Integer openId){
+	public void setOpenId(String openId){
 		this.openId = openId;
 	}
 
-	public Integer getOpenId(){
+	public String getOpenId(){
 		return this.openId;
 	}
 
